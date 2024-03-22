@@ -1,67 +1,26 @@
-# TASK 22 - DisCoTEX
-- Homepage: https://sites.google.com/view/discotex/task?authuser=0
-- Data: https://sites.google.com/view/discotex/data
+# DisCoTex
 
-## Data
-- **Task 1 - Last sentence classification**: binary classification task; given a short paragraph (originally called prompt) and an individual sentence (target), classify whether the target follows or not, thus joining it to the prompt gives out a coherent or incoherent text.
+Datasets for all the sub-tasks are released as tab-separated text files. 
 
-- **Task 2 - Human score prediction**: regression task; predict the average coherence score assigned by human raters to short paragraphs which were evaluated both in their original and artificially modified version. Judgments will be collected through crowdsourcing and on an ordinal scale (i.e. 5-point Likert Scale), on the assumption that coherence is a gradual notion.
+For the first sub-task (Last sentence classification) we kept separated data from the two sources (i.e. Wikipedia and TED). Both versions present the following structure:
 
-**NOTE**: for task 2, you are required to: a) _cast the scores as integers_ (you choose how and motivate why), and then b) _verbalise the scores_ using the common Likert-scale verbalisation (e.g., "Eccellente" in place of "5"). 
-Furthermore, the actual data may have scores ranging over the previously mentioned Likert-scale; what you can do is simply to use the new range.
+    ID: a simple identifier for the entry;
 
-The dataset is already splitted into training and test data.
-For further details on the data, please refer to the website. 
+    PROMPT: a small snippet of text (3 sentences on average);
 
-## Expected output
+    TARGET: the sentence for which participants are asked to assess if it is coherent with the PROMPT (i.e. it is the next sentence after the PROMPT);
 
-The expected output is two (2) datasets per tasks + one (1) prompt file per tasks.
+    CLASS: the class to be predicted. 1 stands for the positive class (i.e. the TARGET follows the PROMPT), 0 for the negative one (i.e. the TARGET does not follow the PROMPT).
 
-### Task 1 - Last sentence classification
-Files to submit: 
-- `discotex-task1-train-data.jsonl`
-- `discotex-task1-test-data.jsonl`
-- `discotex-task1-prompt.jsonl`
+For the second sub-task (Human score prediction) we mixed data from the two sources and we release a single dataset with the followng structure:
 
-Each line in the data files should be a JSON object following this format:
-```JSON
-{
-    "id":           int,
-    "text":         str,
-    "target":       str,
-    "choices":      list[str],
-    "label":        int
-}
-```
+    ID: a simple identifier for the entry;
 
-In the prompt file you have to report the prompts you designed for the task.
-Each line in the prompt files should be a JSON object following this format (max 5 lines):
-```JSON
-{
-    "prompt": str
-}
-```
+    TEXT: a small snippet of text (4 sentences on average), to be evaluated;
 
-### Task 2 - Human score prediction
-Files to submit: 
-- `discotex-task2-train-data.jsonl`
-- `discotex-task2-test-data.jsonl`
-- `discotex-task2-prompt.jsonl`
+    MEAN: the coherence score of the TEXT to be predicted, based on the mean of the human judgements collected;
 
-Each line in the data files should be a JSON object following this format:
-```JSON
-{
-    "id":           int,
-    "text":         str,
-    "choices":      list[str],
-    "label":        int
-}
-```
+    STDEV: standard deviation of the coherence score.
 
-In the prompt file you have to report the prompts you designed for the task.
-Each line in the prompt files should be a JSON object following this format (max 5 lines):
-```JSON
-{
-    "prompt": str
-}
-```
+
+Data for the official test will be provided in the same format, with the exception of the CLASS column for Sub-task 1, and the MEAN and the STDEV columns for Sub-task 2.
